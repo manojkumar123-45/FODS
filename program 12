@@ -1,0 +1,14 @@
+import pandas as pd
+data = {'Product': ['Product_A', 'Product_B', 'Product_A', 'Product_C', 'Product_B', 'Product_C', 'Product_A', 'Product_B', 'Product_C'],
+        'Quantity Sold': [10, 5, 8, 12, 7, 9, 11, 6, 10],
+        'Date': ['2023-10-01', '2023-10-01', '2023-10-02', '2023-10-02', '2023-10-03', '2023-10-03', '2023-10-04', '2023-10-04', '2023-10-05']}
+
+sales_data = pd.DataFrame(data)
+sales_data['Date'] = pd.to_datetime(sales_data['Date'])
+start_date = sales_data['Date'].max() - pd.DateOffset(days=30)
+filtered_data = sales_data[sales_data['Date'] >= start_date]
+product_sales = filtered_data.groupby('Product')['Quantity Sold'].sum()
+top_5_products = product_sales.sort_values(ascending=False).head(5)
+
+print("Top 5 Products Sold in the Past Month:")
+print(top_5_products)
