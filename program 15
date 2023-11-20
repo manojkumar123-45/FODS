@@ -1,0 +1,34 @@
+import numpy as np
+import scipy.stats as stats
+import matplotlib.pyplot as plt
+
+# Generate sample data (replace this with your actual data)
+np.random.seed(42)  # for reproducibility
+control_data = np.random.normal(loc=50, scale=10, size=30)
+treatment_data = np.random.normal(loc=55, scale=10, size=30)
+
+# Visualize the data
+plt.figure(figsize=(10, 6))
+plt.hist(control_data, bins=20, alpha=0.5, label='Control Group')
+plt.hist(treatment_data, bins=20, alpha=0.5, label='Treatment Group')
+plt.title('Distribution of Data in Control and Treatment Groups')
+plt.xlabel('Measurement')
+plt.ylabel('Frequency')
+plt.legend()
+plt.show()
+
+# Perform t-test for independent samples
+t_statistic, p_value = stats.ttest_ind(control_data, treatment_data)
+
+# Display the results
+print(f'T-Statistic: {t_statistic}')
+print(f'P-Value: {p_value}')
+
+# Interpret the results
+alpha = 0.05
+if p_value < alpha:
+    print("The p-value is less than the significance level. Reject the null hypothesis.")
+    print("There is evidence that the new treatment has a statistically significant effect.")
+else:
+    print("Fail to reject the null hypothesis. There is no statistically significant evidence.")
+
