@@ -1,0 +1,22 @@
+import pandas as pd
+from collections import Counter
+import string
+import matplotlib.pyplot as plt
+data = {'Review': ["The product is great and worth the price.",
+                   "Not satisfied with the quality.",
+                   "Amazing experience, highly recommended!",
+                   "The delivery was quick and efficient."]}
+
+reviews_df = pd.DataFrame(data)
+all_reviews = ' '.join(reviews_df['Review'])
+words = all_reviews.split()
+translator = str.maketrans('', '', string.punctuation)
+words = [word.translate(translator).lower() for word in words]
+stop_words = set(["the", "and", "is", "with", "was", "and", "in", "on", "at", "to", "of", "for", "a", "an"])
+filtered_words = [word for word in words if word not in stop_words]
+word_counts = Counter(filtered_words)
+common_words, counts = zip(*word_counts.most_common(20))
+plt.bar(common_words, counts)
+plt.title('Top 20 Most Frequent Words in Customer Reviews')
+plt.xticks(rotation=45, ha='right')
+plt.show()
